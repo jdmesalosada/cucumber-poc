@@ -35,7 +35,12 @@ public class SignUpStepDefinitions {
 
     @When("he sends a confirmation password that doesn't match with his password")
     public void he_sends_a_confirmation_password_that_doesn_t_match_with_his_password() {
-
+        driver.findElement(By.id("name")).sendKeys("nombre");
+        driver.findElement(By.id("company")).sendKeys("google");
+        driver.findElement(By.id("email")).sendKeys("google@gmail.com");
+        driver.findElement(By.id("password")).sendKeys("miPassword");
+        driver.findElement(By.id("password-confirm")).sendKeys("miconfirmacion");
+        driver.findElement(By.cssSelector("button[type=submit]")).click();
     }
 
     @Then("he should be informed that the passwords don't match")

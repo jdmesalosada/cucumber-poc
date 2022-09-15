@@ -1,14 +1,31 @@
 package com.jmconsultant.hellocucumber;
 
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 
 public class SignUpStepDefinitions {
 
+    WebDriver driver;
+
+    @Before
+    public void setup() {
+        driver = WebDriverManager.chromedriver().create();
+    }
+
+    @After
+    public void teardown() {
+        driver.quit();
+    }
+
     @Given("Jhon Wick is an user that enjoys to travel")
     public void jhon_wick_is_an_user_that_enjoys_to_travel() {
-
+        driver.navigate().to("https://blazedemo.com/register");
     }
 
     @Given("he wants to sign up in order to purchase flights in sales")

@@ -8,10 +8,12 @@ plugins {
 }
 
 repositories {
+    //mavenLocal()
+    //maven {
+    //    url = uri('https://repo.maven.apache.org/maven2/')
+    //}
     mavenLocal()
-    maven {
-        url = uri('https://repo.maven.apache.org/maven2/')
-    }
+    mavenCentral()
 }
 
 dependencies {
@@ -55,7 +57,23 @@ task cucumber() {
         javaexec {
             main = "io.cucumber.core.cli.Main"
             classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
-            args = ['--plugin', 'pretty', '--glue', 'com/jmconsultant/hellocucumber', 'src/test/resources']
+            args = ['--plugin', 'pretty',
+                    '--plugin', 'html:target/cucumber-report.html',
+                    '--glue', 'com/jmconsultant/hellocucumber',
+                    'src/test/resources']
+        }
+    }
+}
+
+task cucumberByTags() {
+    dependsOn assemble, testClasses
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty',
+                    '--tags', "${tags}",
+                    '--glue', 'com/jmconsultant/hellocucumber', 'src/test/resources']
         }
     }
 }
